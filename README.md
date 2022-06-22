@@ -51,6 +51,6 @@ POST    http://localhost:4000/api/signin
 ```ruby
 GET     http://localhost:4000/api/projects
 GET     http://localhost:4000/api/project/:projectId
-GET    http://localhost:4000/api/project
+GET     http://localhost:4000/api/project
 DELETE  http://localhost:4000/api/project/:projectId
 ```
