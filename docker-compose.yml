@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+    redis:
+        container_name: redis
+        image: redislabs/redismod:latest
+        expose:
+            - ${REDIS_PORT}
+        ports:
+            - "${REDIS_PORT}:${REDIS_PORT}"

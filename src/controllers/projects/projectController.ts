@@ -1,27 +1,702 @@
+import { AxiosInstance } from "axios";
 import { Request, Response } from "express";
-import { axiosInstance } from "../../defaults/axiosInstance";
+import { generateAxiosInstance } from "../../defaults/generateAxiosInstance";
 
 export const ProjectController = {
-    getAllProjects(req: Request, res: Response) {
+    async getAll(req: Request, res: Response) {
         let query: string = `query {
             projects {
-                id,
-                name,
+              id
+              name
+              description
+              status
+              jobsCount
+              creator
+              apps {
+                id
+                name
                 description
+                creationDate
+                creator
+                versions {
+                  number
+                  creationDate
+                  releaseNote
+                  dockerInfo {
+                    image
+                    dockerCredentialsId
+                  }
+                  creator
+                  ports {
+                    name
+                    number
+                    isRewriteUrl
+                    basePathVariableName
+                    scope
+                    internalUrl
+                  }
+                  isMajor
+                  volumesWithPath {
+                    path
+                    volume {
+                      id
+                      name
+                      creator
+                      description
+                      size
+                      projectId
+                      creationDate
+                      linkedApp {
+                        id
+                        name
+                      }
+                    }
+                  }
+                }
+                currentVersion {
+                  number
+                  creationDate
+                  releaseNote
+                  dockerInfo {
+                    image
+                    dockerCredentialsId
+                  }
+                  creator
+                  ports {
+                    name
+                    number
+                    isRewriteUrl
+                    basePathVariableName
+                    scope
+                    internalUrl
+                  }
+                  isMajor
+                  volumesWithPath {
+                    path
+                    volume {
+                      id
+                      name
+                      creator
+                      description
+                      size
+                      projectId
+                      creationDate
+                      linkedApp {
+                        id
+                        name
+                      }
+                    }
+                  }
+                }
+                technology {
+                  id
+                }
+                project {
+                  id
+                  name
+                }
+                linkedVolumes {
+                  id
+                  name
+                  creator
+                  description
+                  size
+                  projectId
+                  creationDate
+                  linkedApp {
+                    id
+                    name
+                  }
+                }
+                isGenericApp
+                history {
+                  id
+                  events {
+                    event {
+                      recordAt
+                    }
+                    transitionTime
+                  }
+                  runningVersionNumber
+                  currentStatus
+                  startTime
+                  stopTime
+                }
+                alerting {
+                  emails
+                  statusList
+                  loginEmails {
+                    login
+                    email
+                  }
+                }
+              }
+              volumes {
+                id
+                name
+                description
+                size
+                projectId
+                creationDate
+                linkedApp {
+                  id
+                  name
+                }
+              }
+              pipelines {
+                id
+                name
+                description
+                alerting {
+                  emails
+                  statusList
+                  loginEmails {
+                    login
+                    email
+                  }
+                }
+                pipelineInstanceCount
+                instances {
+                  id
+                  number
+                  status
+                  jobsInstance {
+                    id
+                    number
+                    status
+                    statusDetails
+                    startTime
+                    endTime
+                    pipelineInstanceId
+                    jobId
+                    jobNodeId
+                    effectiveDockerImage
+                    sparkuiUrl
+                  }
+                  conditionsInstance {
+                    conditionNodeId
+                    isSuccess
+                  }
+                  nodeStatuses {
+                    nodeId
+                    status
+                  }
+                  version {
+                    number
+                    releaseNote
+                    graph {
+                      jobNodes {
+                        id
+                        job {
+                          id
+                          name
+                        }
+                      }
+                      conditionNodes {
+                        id
+                        position {
+                          x
+                          y
+                        }
+                        nextNodesSuccess
+                        nextNodesFailure
+                      }
+                    }
+                    creationDate
+                    creator
+                    isCurrent
+                    isMajor
+                  }
+                  startTime
+                  endTime
+                  pipelineId
+                }
+                versions {
+                  number
+                  releaseNote
+                  graph {
+                    jobNodes {
+                      id
+                      job {
+                        id
+                        name
+                        description
+                        countJobInstance
+                        versions {
+                          number
+                          creationDate
+                          releaseNote
+                          runtimeVersion
+                          commandLine
+                          packageInfo {
+                            name
+                            downloadUrl
+                          }
+                          dockerInfo {
+                            image
+                            dockerCredentialsId
+                          }
+                          extraTechnology {
+                            language
+                            version
+                          }
+                          isCurrent
+                          isMajor
+                          creator
+                          exposedPorts {
+                            name
+                            port
+                            isRewriteUrl
+                            basePathVariableName
+                            isAuthenticationRequired
+                          }
+                          storagePaths
+                        }
+                        category
+                        technology {
+                          id
+                        }
+                        isScheduled
+                        cronScheduling
+                        scheduleStatus
+                        scheduleTimezone
+                        alerting {
+                          emails
+                          statusList
+                          loginEmails {
+                            login
+                            email
+                          }
+                        }
+                        isStreaming
+                        creationDate
+                        migrationStatus
+                        migrationProjectId
+                        isDeletable
+                        pipelines {
+                          id
+                          name
+                        }
+                        graphPipelines {
+                          id
+                          name
+                        }
+                        storageSizeInMB
+                        doesUseGPU
+                        resources {
+                          cpu {
+                            request
+                            limit
+                          }
+                          memory {
+                            request
+                            limit
+                          }
+                          gpu {
+                            request
+                            limit
+                          }
+                        }
+                      }
+                      position {
+                        x
+                        y
+                      }
+                      nextNodes
+                    }
+                    conditionNodes {
+                      id
+                      position {
+                        x
+                        y
+                      }
+                      nextNodesSuccess
+                      nextNodesFailure
+                    }
+                  }
+                  creationDate
+                  creator
+                  isCurrent
+                  isMajor
+                }
+                project {
+                  id
+                  name
+                }
+                creationDate
+                creator
+                isScheduled
+                cronScheduling
+                scheduleStatus
+                scheduleTimezone
+                isLegacyPipeline
+              }
             }
         }`;
+        let axiosInstance: AxiosInstance = await generateAxiosInstance();
 
         axiosInstance({
-            method: "post",
+            method: "POST",
             data: {
                 query,
             },
         })
             .then((result) => {
-                res.status(200).send(result.data);
+                return res.status(200).send(result.data);
             })
             .catch((error) => {
-                console.log(error);
+                return res.status(404).send({
+                    message: error,
+                });
             });
     },
+    async getById(req: Request, res: Response) {
+        let projectId: string = req.params.projectId;
+        let query: string = `query {
+            project(id: "${projectId}") {
+              id
+              name
+              description
+              status
+              jobsCount
+              creator
+              apps {
+                id
+                name
+                description
+                creationDate
+                creator
+                versions {
+                  number
+                  creationDate
+                  releaseNote
+                  dockerInfo {
+                    image
+                    dockerCredentialsId
+                  }
+                  creator
+                  ports {
+                    name
+                    number
+                    isRewriteUrl
+                    basePathVariableName
+                    scope
+                    internalUrl
+                  }
+                  isMajor
+                  volumesWithPath {
+                    path
+                    volume {
+                      id
+                      name
+                      creator
+                      description
+                      size
+                      projectId
+                      creationDate
+                      linkedApp {
+                        id
+                        name
+                      }
+                    }
+                  }
+                }
+                currentVersion {
+                  number
+                  creationDate
+                  releaseNote
+                  dockerInfo {
+                    image
+                    dockerCredentialsId
+                  }
+                  creator
+                  ports {
+                    name
+                    number
+                    isRewriteUrl
+                    basePathVariableName
+                    scope
+                    internalUrl
+                  }
+                  isMajor
+                  volumesWithPath {
+                    path
+                    volume {
+                      id
+                      name
+                      creator
+                      description
+                      size
+                      projectId
+                      creationDate
+                      linkedApp {
+                        id
+                        name
+                      }
+                    }
+                  }
+                }
+                technology {
+                  id
+                }
+                project {
+                  id
+                  name
+                }
+                linkedVolumes {
+                  id
+                  name
+                  creator
+                  description
+                  size
+                  projectId
+                  creationDate
+                  linkedApp {
+                    id
+                    name
+                  }
+                }
+                isGenericApp
+                history {
+                  id
+                  events {
+                    event {
+                      recordAt
+                    }
+                    transitionTime
+                  }
+                  runningVersionNumber
+                  currentStatus
+                  startTime
+                  stopTime
+                }
+                alerting {
+                  emails
+                  statusList
+                  loginEmails {
+                    login
+                    email
+                  }
+                }
+              }
+              volumes {
+                id
+                name
+                description
+                size
+                projectId
+                creationDate
+                linkedApp {
+                  id
+                  name
+                }
+              }
+              pipelines {
+                id
+                name
+                description
+                alerting {
+                  emails
+                  statusList
+                  loginEmails {
+                    login
+                    email
+                  }
+                }
+                pipelineInstanceCount
+                instances {
+                  id
+                  number
+                  status
+                  jobsInstance {
+                    id
+                    number
+                    status
+                    statusDetails
+                    startTime
+                    endTime
+                    pipelineInstanceId
+                    jobId
+                    jobNodeId
+                    effectiveDockerImage
+                    sparkuiUrl
+                  }
+                  conditionsInstance {
+                    conditionNodeId
+                    isSuccess
+                  }
+                  nodeStatuses {
+                    nodeId
+                    status
+                  }
+                  version {
+                    number
+                    releaseNote
+                    graph {
+                      jobNodes {
+                        id
+                        job {
+                          id
+                          name
+                        }
+                      }
+                      conditionNodes {
+                        id
+                        position {
+                          x
+                          y
+                        }
+                        nextNodesSuccess
+                        nextNodesFailure
+                      }
+                    }
+                    creationDate
+                    creator
+                    isCurrent
+                    isMajor
+                  }
+                  startTime
+                  endTime
+                  pipelineId
+                }
+                versions {
+                  number
+                  releaseNote
+                  graph {
+                    jobNodes {
+                      id
+                      job {
+                        id
+                        name
+                        description
+                        countJobInstance
+                        versions {
+                          number
+                          creationDate
+                          releaseNote
+                          runtimeVersion
+                          commandLine
+                          packageInfo {
+                            name
+                            downloadUrl
+                          }
+                          dockerInfo {
+                            image
+                            dockerCredentialsId
+                          }
+                          extraTechnology {
+                            language
+                            version
+                          }
+                          isCurrent
+                          isMajor
+                          creator
+                          exposedPorts {
+                            name
+                            port
+                            isRewriteUrl
+                            basePathVariableName
+                            isAuthenticationRequired
+                          }
+                          storagePaths
+                        }
+                        category
+                        technology {
+                          id
+                        }
+                        isScheduled
+                        cronScheduling
+                        scheduleStatus
+                        scheduleTimezone
+                        alerting {
+                          emails
+                          statusList
+                          loginEmails {
+                            login
+                            email
+                          }
+                        }
+                        isStreaming
+                        creationDate
+                        migrationStatus
+                        migrationProjectId
+                        isDeletable
+                        pipelines {
+                          id
+                          name
+                        }
+                        graphPipelines {
+                          id
+                          name
+                        }
+                        storageSizeInMB
+                        doesUseGPU
+                        resources {
+                          cpu {
+                            request
+                            limit
+                          }
+                          memory {
+                            request
+                            limit
+                          }
+                          gpu {
+                            request
+                            limit
+                          }
+                        }
+                      }
+                      position {
+                        x
+                        y
+                      }
+                      nextNodes
+                    }
+                    conditionNodes {
+                      id
+                      position {
+                        x
+                        y
+                      }
+                      nextNodesSuccess
+                      nextNodesFailure
+                    }
+                  }
+                  creationDate
+                  creator
+                  isCurrent
+                  isMajor
+                }
+                project {
+                  id
+                  name
+                }
+                creationDate
+                creator
+                isScheduled
+                cronScheduling
+                scheduleStatus
+                scheduleTimezone
+                isLegacyPipeline
+              }
+            }
+        }`;
+        let axiosInstance: AxiosInstance = await generateAxiosInstance();
+
+        axiosInstance({
+            method: "POST",
+            data: {
+                query,
+            },
+        })
+            .then((result) => {
+                return res.status(200).send(result.data);
+            })
+            .catch((error) => {
+                return res.status(404).send({
+                    message: error,
+                });
+            });
+    },
+    duplicate(req: Request, res: Response) {},
 };
