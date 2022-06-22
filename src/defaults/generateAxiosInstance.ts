@@ -14,7 +14,7 @@ export const generateAxiosInstance = (): Promise<AxiosInstance> => {
                 resolve(
                     wrapper(
                         axios.create({
-                            baseURL: "https://demo-workspace.a4.saagie.io/projects/api/platform/2/graphql",
+                            baseURL: String(process.env.SAAGIE_GRAPHQL_URL),
                             withCredentials: true,
                             jar: jar,
                         })
