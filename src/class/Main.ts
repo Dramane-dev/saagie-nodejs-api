@@ -4,7 +4,7 @@ import cors from "cors";
 import { healthcheckRoute } from "../routes/healthcheck/healthcheck.route";
 import { authRoute } from "../routes/auth/auth.route";
 import { projectRoute } from "../routes/projects/project.route";
-
+import { connection } from "../redis/connection";
 export default class Main {
     constructor(private _router: Express, private _port?: number) {
         this._port = parseInt(String(process.env.PORT));
@@ -26,6 +26,7 @@ export default class Main {
                 resolve({
                     serverStatus: 200,
                     message: `Server ${process.pid} running on port ${this._port} ✅`,
+                    redisClient: await connection(),
                 });
             });
         });
