@@ -170,17 +170,6 @@
                         "isLegacyPipeline": false
                     }
                 ]
-            },
-            {
-                "id": "dc8bef98-e177-4ea6-bbc0-de7b55942a29",
-                "name": "newName",
-                "creator": "estiam_g03_cristian.tirche",
-                "description": "",
-                "jobsCount": 0,
-                "status": "READY",
-                "apps": [],
-                "volumes": [],
-                "pipelines": []
             }
         ]
     }

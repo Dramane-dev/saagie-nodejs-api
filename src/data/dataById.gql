@@ -1,0 +1,352 @@
+query {
+    project(id: "b736ceab-de22-4493-8d17-9669fdc1f78c") {
+        id
+        name
+        description
+        status
+        jobsCount
+        creator
+        volumes {
+            id
+            name
+            description
+            size
+            projectId
+            creationDate
+            linkedApp {
+                id
+                name
+            }
+        }
+        pipelines {
+            id
+            name
+            description
+            alerting {
+                emails
+                statusList
+                loginEmails {
+                    login
+                    email
+                }
+            }
+            pipelineInstanceCount
+            instances {
+                id
+                number
+                status
+                jobsInstance {
+                    id
+                    number
+                    status
+                    statusDetails
+                    startTime
+                    endTime
+                    pipelineInstanceId
+                    jobId
+                    jobNodeId
+                    effectiveDockerImage
+                    sparkuiUrl
+                }
+                conditionsInstance {
+                    conditionNodeId
+                    isSuccess
+                }
+                nodeStatuses {
+                    nodeId
+                    status
+                }
+                version {
+                    number
+                    releaseNote
+                    graph {
+                        jobNodes {
+                            id
+                            job {
+                                id
+                                name
+                            }
+                        }
+                        conditionNodes {
+                            id
+                            position {
+                                x
+                                y
+                            }
+                            nextNodesSuccess
+                            nextNodesFailure
+                        }
+                    }
+                    creationDate
+                    creator
+                    isCurrent
+                    isMajor
+                }
+                startTime
+                endTime
+                pipelineId
+            }
+            versions {
+                number
+                releaseNote
+                graph {
+                    jobNodes {
+                        id
+                        job {
+                            id
+                            name
+                            description
+                            countJobInstance
+                            versions {
+                                number
+                                creationDate
+                                releaseNote
+                                runtimeVersion
+                                commandLine
+                                packageInfo {
+                                    name
+                                    downloadUrl
+                                }
+                                dockerInfo {
+                                    image
+                                    dockerCredentialsId
+                                }
+                                extraTechnology {
+                                    language
+                                    version
+                                }
+                                isCurrent
+                                isMajor
+                                creator
+                                exposedPorts {
+                                    name
+                                    port
+                                    isRewriteUrl
+                                    basePathVariableName
+                                    isAuthenticationRequired
+                                }
+                                storagePaths
+                            }
+                            category
+                            technology {
+                                id
+                            }
+                            isScheduled
+                            cronScheduling
+                            scheduleStatus
+                            scheduleTimezone
+                            alerting {
+                                emails
+                                statusList
+                                loginEmails {
+                                    login
+                                    email
+                                }
+                            }
+                            isStreaming
+                            creationDate
+                            migrationStatus
+                            migrationProjectId
+                            isDeletable
+                            pipelines {
+                                id
+                                name
+                            }
+                            graphPipelines {
+                                id
+                                name
+                            }
+                            storageSizeInMB
+                            doesUseGPU
+                            resources {
+                                cpu {
+                                    request
+                                    limit
+                                }
+                                memory {
+                                    request
+                                    limit
+                                }
+                                gpu {
+                                    request
+                                    limit
+                                }
+                            }
+                        }
+                        position {
+                            x
+                            y
+                        }
+                        nextNodes
+                    }
+                    conditionNodes {
+                        id
+                        position {
+                            x
+                            y
+                        }
+                        nextNodesSuccess
+                        nextNodesFailure
+                    }
+                }
+                creationDate
+                creator
+                isCurrent
+                isMajor
+            }
+            creationDate
+            creator
+            isScheduled
+            cronScheduling
+            scheduleStatus
+            scheduleTimezone
+            isLegacyPipeline
+        }
+    }
+    labWebApps(projectId: "b736ceab-de22-4493-8d17-9669fdc1f78c") {
+        id
+        name
+        description
+        countJobInstance
+        versions(onlyCurrent: true) {
+            number
+            creationDate
+            releaseNote
+            runtimeVersion
+            commandLine
+            packageInfo {
+                name
+                downloadUrl
+            }
+            dockerInfo {
+                image
+                dockerCredentialsId
+            }
+            extraTechnology {
+                language
+                version
+            }
+            isCurrent
+            isMajor
+            creator
+            exposedPorts {
+                name
+                port
+                isRewriteUrl
+                basePathVariableName
+                isAuthenticationRequired
+            }
+            storagePaths
+        }
+        category
+        technology {
+            id
+        }
+        isScheduled
+        cronScheduling
+        scheduleStatus
+        scheduleTimezone
+        alerting {
+            emails
+            statusList
+            loginEmails {
+                login
+                email
+            }
+        }
+        isStreaming
+        creationDate
+        migrationStatus
+        migrationProjectId
+        isDeletable
+        storageSizeInMB
+        doesUseGPU
+        resources {
+            cpu {
+                request
+                limit
+            }
+            memory {
+                request
+                limit
+            }
+            gpu {
+                request
+                limit
+            }
+        }
+    }
+    jobs(projectId: "b736ceab-de22-4493-8d17-9669fdc1f78c") {
+        id
+        name
+        description
+        countJobInstance
+        versions(onlyCurrent: true) {
+            number
+            creationDate
+            releaseNote
+            runtimeVersion
+            commandLine
+            packageInfo {
+                name
+                downloadUrl
+            }
+            dockerInfo {
+                image
+                dockerCredentialsId
+            }
+            extraTechnology {
+                language
+                version
+            }
+            isCurrent
+            isMajor
+            creator
+            exposedPorts {
+                name
+                port
+                isRewriteUrl
+                basePathVariableName
+                isAuthenticationRequired
+            }
+            storagePaths
+        }
+        category
+        technology {
+            id
+        }
+        isScheduled
+        cronScheduling
+        scheduleStatus
+        scheduleTimezone
+        alerting {
+            emails
+            statusList
+            loginEmails {
+                login
+                email
+            }
+        }
+        isStreaming
+        creationDate
+        migrationStatus
+        migrationProjectId
+        isDeletable
+        storageSizeInMB
+        doesUseGPU
+        resources {
+            cpu {
+                request
+                limit
+            }
+            memory {
+                request
+                limit
+            }
+            gpu {
+                request
+                limit
+            }
+        }
+    }
+}
