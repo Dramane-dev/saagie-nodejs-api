@@ -5,11 +5,6 @@ import { IProject } from "../interfaces/IProject";
 import crypto from "crypto";
 
 export const backgroundTask = async (newProjectId: string, projectToDuplicate: IProject) => {
-    // CREATED
-    // INIT_REQUESTED
-    // INITIALIZING
-    // FAILED
-    // READY
     let projectStatus: string = "INITIALIZING";
     const query: string = `query {
         project(id: "${newProjectId}") {

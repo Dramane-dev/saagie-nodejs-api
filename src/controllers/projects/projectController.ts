@@ -916,7 +916,7 @@ export const ProjectController = {
                         },
                     },
                 };
-                projectToDuplicate.labWebApps?.map((app) => console.log(app.name));
+
                 axiosInstance({
                     method: "POST",
                     data: {
@@ -937,7 +937,6 @@ export const ProjectController = {
                     });
             })
             .catch((error) => {
-                console.log(error);
                 return res.status(404).send({
                     message: error,
                 });

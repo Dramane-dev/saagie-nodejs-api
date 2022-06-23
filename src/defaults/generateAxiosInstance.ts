@@ -6,6 +6,7 @@ import { redisClient } from "../redis/client";
 export const generateAxiosInstance = (): Promise<AxiosInstance> => {
     return new Promise(async (resolve, reject) => {
         const jar = new CookieJar();
+
         jar.setCookie(
             `${process.env.SAAGIE_REALM}=${await redisClient.get("SAAGIE_ACCESS_TOKEN")}`,
             String(process.env.SAAGIE_GRAPHQL_URL)
