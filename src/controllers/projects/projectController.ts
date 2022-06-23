@@ -1,8 +1,10 @@
-import { AxiosInstance } from "axios";
+import { AxiosInstance, AxiosPromise } from "axios";
 import { Request, Response } from "express";
 import { generateAxiosInstance } from "../../defaults/generateAxiosInstance";
 import { IProject } from "../../interfaces/IProject";
 import crypto from "crypto";
+import { AppTechnologies, JobTechnologies } from "../../constants";
+import { backgroundTask } from "../../functions/backgroundTask";
 
 export const ProjectController = {
     async getAll(req: Request, res: Response) {
@@ -880,7 +882,7 @@ export const ProjectController = {
             }
           }
         }
-      }`;
+        }`;
         let axiosInstance: AxiosInstance = await generateAxiosInstance();
 
         axiosInstance({
@@ -892,17 +894,13 @@ export const ProjectController = {
             .then((result) => {
                 let projectToDuplicate: IProject = result.data.data;
                 let mutation: string = `mutation createNewProject($project: ProjectInput!) {
-              createProject(project: $project) {
-                id,
-                name,
-                description,
-                apps {
-                  id
-                },
+                createProject(project: $project) {
+                  id,
+                  name,
+                  description,
+                }
               }
-            }
             `;
-                console.log(projectToDuplicate.labWebApps?.filter((app) => app.id)[0].technology.id);
                 let variables: object = {
                     project: {
                         name: `${projectToDuplicate.project.name.replace(
@@ -910,27 +908,13 @@ export const ProjectController = {
                             ""
                         )} duplicated-${crypto.randomBytes(2).toString("hex")}`,
                         description: `${projectToDuplicate.project.description}`,
-                        appTechnologies: [
-                            {
-                                id: `${projectToDuplicate.labWebApps?.filter((app) => app.id)[0].technology.id}`,
-                            },
-                        ],
+                        appTechnologies: AppTechnologies,
+                        technologiesByCategory: JobTechnologies,
                         authorizedGroups: {
                             name: "estiam_g03_hackaton",
                             role: "ROLE_PROJECT_MANAGER",
                         },
                     },
-                    //   jobs: [
-                    //     projectToDuplicate.jobs?.map(job => {
-                    //     return {
-                    //       name: `${job.name}`,
-                    //       description: `${job.description}`,
-                    //       countJobInstance: `${job.countJobInstance}`,
-                    //       category: `${job.category}`,
-                    //       isScheduled: `${job.isScheduled}`,
-                    //     }
-                    //   })
-                    //  ]
                 };
                 projectToDuplicate.labWebApps?.map((app) => console.log(app.name));
                 axiosInstance({
@@ -941,6 +925,9 @@ export const ProjectController = {
                     },
                 })
                     .then((result) => {
+                        let newProjectId: string = result.data.data.createProject.id;
+
+                        backgroundTask(newProjectId, projectToDuplicate);
                         return res.status(200).send(result.data);
                     })
                     .catch((error) => {

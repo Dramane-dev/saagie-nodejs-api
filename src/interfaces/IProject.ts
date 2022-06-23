@@ -174,7 +174,7 @@ interface IRessources {
 
 interface IAlerting {
     emails: string;
-    statusList: string;
+    statusList: string[];
     loginEmails: {
         login: string;
         email: string;
